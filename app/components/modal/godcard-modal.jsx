@@ -7,6 +7,7 @@ export default function GodcardModal() {
     const videoRef = useRef(null)
     const photoRef = useRef(null)
 
+    const [onSnap, setOnSnap] = useState(false)
     const [hasPhoto, setHasPhoto] = useState(false);
 
     const getVideo = () => {
@@ -30,6 +31,8 @@ export default function GodcardModal() {
 
     const takePhoto = () => {
 
+        setOnSnap(true)
+
         const width = 100; // Set the desired width for the avatar
         const height = width / (16 / 9); // Calculate height to maintain the aspect ratio
 
@@ -44,14 +47,10 @@ export default function GodcardModal() {
         // Draw the video frame on the canvas with the new dimensions
         ctx.drawImage(video, 0, 0, width, height);
 
-        // Apply styling to make it look like an avatar
-        photo.style.borderRadius = '50%'; // Rounded corners
-        photo.style.maxWidth = '100px'; // Adjust the maximum width as needed
-        photo.style.maxHeight = '100px'; // Adjust the maximum height as needed
-        // Add any other styling properties as needed
+        // Apply Bootstrap classes for responsiveness
+        photo.classList.add('img-fluid', 'rounded', 'mx-auto', 'd-block');
 
         setHasPhoto(true);
-
 
     }
 
@@ -69,34 +68,42 @@ export default function GodcardModal() {
                                 <GiDominoMask style={{
                                     color: "white",
                                     fontSize: "50px"
-                                }}>   
+                                }}>
                                 </GiDominoMask>
                             </div>
                         </div>
 
 
                         <div class="modal-body">
-                            <Fragment>
+                            
                                 <div className='d-flex align-item-center justify-content-center rounded mb-5'>
                                     <video class="rounded" ref={videoRef}></video>
                                 </div>
 
-                                <div className='card bg-dark'>
-                                    <div className='card-body'>
+                                {onSnap  ?
+                                    <>
+                                        <div>
+                                            <div className='card bg-dark'>
+                                                <div className='card-body'>
 
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0">
-                                                <canvas class="img-fluid rounded" height={50} width={50} ref={photoRef}></canvas>
-                                            </div>
-                                            <div class="flex-grow-1 ms-3 text-white">
-                                                This is some content from a media component. You can replace this with any content and adjust it as needed.
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0">
+                                                            <canvas class="img-fluid rounded" ref={photoRef}></canvas>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-3 text-white">
+                                                            This is some content from a media component. You can replace this with any content and adjust it as needed.
+                                                        </div>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
+                                    </>
+                                    :
+                                    <></>
+                                }
 
-                                    </div>
-                                </div>
-
-                            </Fragment>
+                            
                         </div>
 
 
