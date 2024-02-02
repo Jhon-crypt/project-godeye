@@ -1,4 +1,5 @@
 import { Fragment, useRef, useEffect, useState } from 'react';
+import { GiDominoMask } from "react-icons/gi";
 
 
 export default function GodcardModal() {
@@ -60,12 +61,17 @@ export default function GodcardModal() {
 
             <div class="modal fade" id="cameraModal">
                 <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content bg-dark text-white">
+                    <div class="modal-content text-white" style={{ background: "rgba(39, 39, 39, 0.1)", backdropFilter: "blur(60px)", "-webkit-backdrop-filter": "blur(60px)", borderRadius: "30px;" }}>
 
 
-                        <div class="modal-header">
-                            <h4 class="modal-title">Godeye</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <div class="border-bottom-0">
+                            <div className='d-flex align-content-center justify-content-center'>
+                                <GiDominoMask style={{
+                                    color: "white",
+                                    fontSize: "50px"
+                                }}>   
+                                </GiDominoMask>
+                            </div>
                         </div>
 
 
@@ -74,18 +80,19 @@ export default function GodcardModal() {
                                 <div className='d-flex align-item-center justify-content-center rounded mb-5'>
                                     <video class="rounded" ref={videoRef}></video>
                                 </div>
-                                <div className='card bg-black'>
+
+                                <div className='card bg-dark'>
                                     <div className='card-body'>
-                                        <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
-                                            <div class="d-flex">
-                                                <div class="flex-shrink-0">
-                                                    <canvas class="img-fluid rounded" height={50} width={50} ref={photoRef}></canvas>
-                                                </div>
-                                                <div class="flex-grow-1 ms-3 text-white">
-                                                    This is some content from a media component. You can replace this with any content and adjust it as needed.
-                                                </div>
+
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <canvas class="img-fluid rounded" height={50} width={50} ref={photoRef}></canvas>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3 text-white">
+                                                This is some content from a media component. You can replace this with any content and adjust it as needed.
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -93,7 +100,7 @@ export default function GodcardModal() {
                         </div>
 
 
-                        <div class="modal-footer">
+                        <div class="modal-footer d-flex align-content-center justify-content-center border-top-0">
                             <button type="button" class="btn btn-success" onClick={takePhoto}>Snap</button>
                             {hasPhoto ?
                                 <>
@@ -107,8 +114,8 @@ export default function GodcardModal() {
                         </div>
 
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
 
 
         </>
