@@ -1,4 +1,5 @@
 import '../../styles/hero/hero.css'
+import Link from 'next/link'
 import { BrowserView, MobileView } from 'react-device-detect'
 
 export default function Hero() {
@@ -32,7 +33,7 @@ export default function Hero() {
 
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                         <button id="hero-buttonOne" type="button">Get started</button>
-                        <button id="hero-buttonTwo" type="button">Try Demo</button>
+                        <Link href="/demo" class="text-decoration-none" id="hero-buttonTwo" type="button">Try Demo</Link>
                     </div>
                 </div>
                 <BrowserView>
