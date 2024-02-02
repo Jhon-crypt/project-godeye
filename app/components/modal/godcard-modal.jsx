@@ -1,13 +1,31 @@
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, useEffect, useState } from 'react';
 
 
 export default function GodcardModal() {
 
-    const cam = useRef(null);
+    const videoRef = useRef(null)
+    const photoRef = useRef(null)
 
-    function capture(imgSrc) {
-        console.log(imgSrc);
+    const [hasPhoto, setHasPhoto] = useState(false);
+
+    const getVideo = () => {
+        navigator.mediaDevices
+            .getUserMedia({
+                video: { width: 300, height: 150 }
+            })
+            .then(stream => {
+                let video = videoRef.current;
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
+
+    useEffect(() => {
+        getVideo()
+    }, [videoRef])
 
     return (
 
@@ -26,23 +44,27 @@ export default function GodcardModal() {
 
                         <div class="modal-body">
                             <Fragment>
-                                <Camera
-
-                                    front={false}
-                                    capture={capture}
-                                    ref={cam}
-                                    width="80%"
-                                    height="80%"
-                                    focusWidth="80%"
-                                    focusHeight="80%"
-                                    btnColor="white"
-                                />
+                                <div className='d-flex align-item-center justify-content-center rounded  '>
+                                    <video class="rounded" ref={videoRef}></video>
+                                </div>
+                                <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
+                                    <canvas ref={photoRef}></canvas>
+                                </div>
                             </Fragment>
                         </div>
 
 
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Snap</button>
+                            {hasPhoto ?
+                                <>
+                                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">End Camera</button>
+                                </>
+                                :
+                                <></>
+                            }
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
                         </div>
 
                     </div>
