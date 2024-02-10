@@ -1,4 +1,5 @@
 import { BsArrowDownRight } from "react-icons/bs";
+import Link from 'next/link'
 
 export default function Hero() {
 
@@ -11,7 +12,7 @@ export default function Hero() {
                         Get Insights On<br />What You See With Ai
                     </h1>
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-                        <h2 className="text-white">Get started</h2>
+                        <h2 className="text-white"><Link href='/dashboard' className="text-decoration-none">Get started</Link></h2>
                         <h2 className="text-white"><BsArrowDownRight className="me-2"/>Learn More</h2>
                     </div>
                     
