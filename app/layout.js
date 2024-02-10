@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BootstrapClientJs from './components/bootstrapJs/bootstrapJs';
 import "./globals.css";
+import Head from 'next/head';
 
 export const metadata = {
   title: "God Eye",
@@ -10,6 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@900&display=swap" rel="stylesheet" />
+      </Head>
       <body>{children}</body>
       <BootstrapClientJs />
     </html>
