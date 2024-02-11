@@ -6,8 +6,8 @@ export default function GodeyeActionButtonSection() {
 
         <>
 
-            <div style={{ position: "fixed", bottom: "10px", right: "5px" }}>
-                <div className="px-1 py-2 rounded bg-primary text-light text-center">
+            <div style={{ position: "fixed", bottom: "10px", right: "10px" }} data-bs-toggle="modal" data-bs-target="#godmodeCard">
+                <div className="px-1 py-2 rounded bg-primary text-dark text-center">
                     <span className="text-center">
                         <GiDominoMask style={{ fontSize: '25px' }}/>
                     </span>
