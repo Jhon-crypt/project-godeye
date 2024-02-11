@@ -1,5 +1,6 @@
 import { GiDominoMask } from "react-icons/gi";
 import GodeyeResultsCard from "../cards/godeye-results-cards";
+import GodmodeCamera from "../section/camera-section";
 
 export default function GodmodeModal() {
 
@@ -8,7 +9,7 @@ export default function GodmodeModal() {
         <>
 
             <div class="modal fade" id="godmodeCard">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content bg-dark">
 
                         <div class="modal-header border-bottom-0">
@@ -19,6 +20,8 @@ export default function GodmodeModal() {
                         </div>
 
                         <div class="modal-body">
+                            <GodmodeCamera />
+
                             <GodeyeResultsCard />
                         </div>
 
