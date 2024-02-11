@@ -7,7 +7,7 @@ export default function GodeyeResultsCard() {
         <>
 
             <div className="d-flex align-content-center justify-content-center">
-                <div className="card mb-3 bg-dark shadow">
+                <div className=" card mb-3 bg-dark shadow">
 
                     <div className="card-body text-white">
 

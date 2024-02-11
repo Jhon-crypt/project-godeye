@@ -1,4 +1,5 @@
 import GodeyeResultsCard from "./godeye-results-cards"
+import '../../styles/card/godeye-card-style.css'
 
 export default function GodeyeCardWrapper() {
 
@@ -8,13 +9,15 @@ export default function GodeyeCardWrapper() {
 
             <div className="card bg-dark">
 
-                <div className="card-body" style={{ maxHeight: "200px;" }}>
+                <div id="warpper-card-body" className="card-body">
 
-                    <h4 className="text-light p-3">Where the magic happens</h4>
+                    <h4 className="text-light p-3 text-center">Where the magic happens</h4>
 
-                    <GodeyeResultsCard />
-                    <GodeyeResultsCard />
-                    <GodeyeResultsCard />
+                    <div id="wrapper-result-card">
+                        <GodeyeResultsCard />
+                        <GodeyeResultsCard />
+                        <GodeyeResultsCard />
+                    </div>
 
                 </div>
 
