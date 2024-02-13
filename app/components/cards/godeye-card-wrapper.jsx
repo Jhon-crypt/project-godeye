@@ -14,9 +14,21 @@ export default function GodeyeCardWrapper() {
                     <h4 className="text-light p-3 text-center">Where the magic happens</h4>
 
                     <div id="wrapper-result-card">
-                        <GodeyeResultsCard />
-                        <GodeyeResultsCard />
-                        <GodeyeResultsCard />
+                        <div className="row">
+                            <div className="col-md-6">
+                                <GodeyeResultsCard />
+                            </div>
+                            <div className="col-md-6">
+                                <GodeyeResultsCard />
+                            </div>
+                            <div className="col-md-6">
+                                <GodeyeResultsCard />
+                            </div>
+                            <div className="col-md-6">
+                                <GodeyeResultsCard />
+                            </div>
+                        </div>
+                        
                     </div>
 
                 </div>

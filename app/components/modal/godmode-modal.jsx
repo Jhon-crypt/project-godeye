@@ -21,7 +21,6 @@ export default function GodmodeModal() {
 
                         <div class="modal-body">
                             <GodmodeCamera />
-
                             <GodeyeResultsCard />
                         </div>
 
