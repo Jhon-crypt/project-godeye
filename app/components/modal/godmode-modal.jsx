@@ -1,6 +1,7 @@
 import { GiDominoMask } from "react-icons/gi";
 import GodeyeResultsCard from "../cards/godeye-results-cards";
 import GodmodeCamera from "../section/camera-section";
+import { FaInfoCircle } from "react-icons/fa";
 
 export default function GodmodeModal() {
 
@@ -20,16 +21,18 @@ export default function GodmodeModal() {
                         </div>
 
                         <div class="modal-body">
-                            <div class="alert alert-success text-center">
-                                Point your camera to what you wanna know about
-                            </div>
+                            <span class="d-flex align-content-center justify-content-center">
+                                <span class="alert alert-success text-center p-2">
+                                    <small><span><FaInfoCircle /></span> Point your camera to what you wanna know about</small>
+                                </span>
+                            </span>
                             <GodmodeCamera />
                             <div class="input-group mb-3 mt-3">
-                                <input type="text" class="form-control" placeholder="Search"/>
-                                    <button class="btn btn-success" type="submit">Go</button>
+                                <input type="text" class="form-control" placeholder="Prompt" />
+                                <button class="btn btn-primary" type="submit">Snap</button>
                             </div>
                             <GodeyeResultsCard />
-                        </div>
+                        </div> 
 
                         <div class="modal-footer border-top-0">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

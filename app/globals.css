@@ -1,6 +1,8 @@
+@import url('../app/fonts/WEB/css/bespoke-stencil.css');
+
 body{
   background: #000;
   height: 100vh;
   margin: 0;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'BespokeStencil-Medium';
 }
