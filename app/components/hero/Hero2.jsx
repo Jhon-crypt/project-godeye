@@ -1,8 +1,10 @@
+"use client"
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { GiDominoMask } from "react-icons/gi";
 import { FaBars } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
+import { Typewriter } from 'react-simple-typewriter'
 import '../../styles/heropage.css'
 
 export default function Hero2() {
@@ -72,20 +74,33 @@ export default function Hero2() {
                                                 <div class="col">
                                                     <div class="mt-3 text-light" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
                                                         <span class="me-3">
-                                                            Solve this assignment
+                                                            <Typewriter
+                                                                loop={5}
+                                                                cursor
+                                                                cursorStyle='_'
+                                                                typeSpeed={70}
+                                                                deleteSpeed={50}
+                                                                delaySpeed={1000}
+                                                                words={['Education and Learning', 'Medical Diagnosis', 'Travel Assistance', 'Art Recognition', 'Identify Plant, Animals']} />
                                                         </span>
-                                                        <button class="btn btn-md rounded-circle bg-light shadow py-2">
-                                                            <FaArrowRight style={{ fontSize: "20px" }} />
+                                                        <button class="btn btn-sm rounded-circle bg-light shadow">
+                                                            <FaArrowRight style={{ fontSize: "15px" }} />
                                                         </button>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="mt-3 text-light" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
                                                         <span class="me-3">
-                                                            How to set up ps5
+                                                            <Typewriter loop={5}
+                                                                cursor
+                                                                cursorStyle='_'
+                                                                typeSpeed={70}
+                                                                deleteSpeed={50}
+                                                                delaySpeed={1000} 
+                                                                words={['For DIY Projects', 'Analyze Environment', 'Scientific Research', 'Language Learning', 'And so much more']} />
                                                         </span>
-                                                        <button class="btn btn-md rounded-circle bg-light shadow py-2">
-                                                            <FaArrowRight style={{ fontSize: "20px" }} />
+                                                        <button class="btn btn-sm rounded-circle bg-light shadow">
+                                                            <FaArrowRight style={{ fontSize: "15px" }} />
                                                         </button>
                                                     </div>
                                                 </div>
