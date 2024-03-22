@@ -57,16 +57,39 @@ export default function GodmodeModal() {
         let width = Math.min(screenWidth, maxWidth);
         const height = width / (16 / 9);
 
-        let video = videoRef.current;
-        let photo = photoRef.current;
+        // Access video and photo elements
+        const video = videoRef.current;
+        const photo = photoRef.current;
 
         // Set canvas width and height
         photo.width = width;
         photo.height = height;
 
-        let ctx = photo.getContext('2d');
-        ctx.drawImage(video, 0, 0, width, height);
+        // Draw the video frame onto the canvas
+        const ctx = photo.getContext('2d');
 
+        // Clear canvas before drawing
+        ctx.clearRect(0, 0, width, height);
+
+        // Calculate the dimensions to maintain the aspect ratio
+        const aspectRatio = video.videoWidth / video.videoHeight;
+        let renderWidth = width;
+        let renderHeight = width / aspectRatio;
+
+        // If the render height exceeds the canvas height, adjust the dimensions
+        if (renderHeight > height) {
+            renderHeight = height;
+            renderWidth = height * aspectRatio;
+        }
+
+        // Calculate the position to center the image on the canvas
+        const x = (width - renderWidth) / 2;
+        const y = (height - renderHeight) / 2;
+
+        // Draw the video frame with the adjusted dimensions
+        ctx.drawImage(video, x, y, renderWidth, renderHeight);
+
+        // Set state to indicate that a photo has been taken
         setHasPhoto(true);
 
     }
@@ -115,8 +138,8 @@ export default function GodmodeModal() {
                                             <img className="rounded mb-3" src="/Bard_Generated_Image6.jpeg" style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
                                             {*/}
                                         <div className="card-body text-white">
-                                            <div class="canvas-container" style={{ maxWidth: '100%', margin: '0 auto' }}>
-                                                <canvas ref={photoRef} className="canvas" style={{ display: 'block', width: '100%', height: 'auto' }}></canvas>
+                                            <div class="canvas-container mb-3" style={{ maxWidth: '100%', margin: '0 auto' }}>
+                                                <canvas ref={photoRef} className="canvas" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: '5px' }}></canvas>
                                             </div>
                                             <h4 class="card-title">Card title</h4>
                                             <p class="card-text">Some example text. Some example text.</p>
