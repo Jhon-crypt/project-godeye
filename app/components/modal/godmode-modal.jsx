@@ -50,19 +50,24 @@ export default function GodmodeModal() {
     }
 
     const takePhoto = () => {
-        const width = 414;
+        // Calculate canvas size based on viewport dimensions and maximum width
+        const maxWidth = 600; // Adjust this value as needed
+        const isPortrait = window.innerHeight > window.innerWidth; // Check if the device is in portrait mode
+        const screenWidth = isPortrait ? window.innerWidth : window.innerHeight;
+        let width = Math.min(screenWidth, maxWidth);
         const height = width / (16 / 9);
 
         let video = videoRef.current;
         let photo = photoRef.current;
 
+        // Set canvas width and height
         photo.width = width;
         photo.height = height;
 
         let ctx = photo.getContext('2d');
         ctx.drawImage(video, 0, 0, width, height);
 
-        setHasPhoto(true)
+        setHasPhoto(true);
 
     }
 
@@ -106,16 +111,15 @@ export default function GodmodeModal() {
                             <div className="d-flex align-content-center justify-content-center">
                                 <div class={(hasPhoto ? '' : 'd-none')}>
                                     <div className=" card mb-3 bg-dark shadow">
-
-                                        <div className="card-body text-white">
-                                            <canvas ref={photoRef}></canvas>
-                                            {/*}
+                                        {/*}
                                             <img className="rounded mb-3" src="/Bard_Generated_Image6.jpeg" style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
                                             {*/}
-
+                                        <div className="card-body text-white">
+                                            <div class="canvas-container" style={{ maxWidth: '100%', margin: '0 auto' }}>
+                                                <canvas ref={photoRef} className="canvas" style={{ display: 'block', width: '100%', height: 'auto' }}></canvas>
+                                            </div>
                                             <h4 class="card-title">Card title</h4>
                                             <p class="card-text">Some example text. Some example text.</p>
-
                                         </div>
 
                                     </div>
