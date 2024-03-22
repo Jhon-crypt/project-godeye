@@ -127,49 +127,34 @@ export default function Hero2() {
                         </div>
 
 
-                        <div class="px-4 py-5 mt-5 text-center text-light">
-                            <div style={{ position: 'relative', height: '50%' }}>
-                                <div style={{ position: 'absolute', zIndex: '1', top: -150, left:190 }}>
+                        <div class="container px-4 text-center text-light">
+                            <div style={{ position: 'relative', width: '100%', height: '86vh', overflow: 'hidden', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className="mt-4">
                                     <Player
                                         autoplay
                                         loop
                                         src="/animation.json"
-                                        style={{ width: '100%' }}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 5,
+                                            height: '100%',
+                                            width: '100%'
+                                        }}
                                     >
                                         <Controls />
                                     </Player>
+                                    {/* <br /><br /><br /><br /><br /><br /><br /> */}
                                 </div>
-                                <div style={{ position: 'relative', zIndex: '1' }}>
+                                <div style={{ position: 'relative' }}>
                                     {/* Your content goes here */}
                                     <h1 class="display-3 fw-bold"><GiDominoMask class="me-2" style={{ fontSize: "100px" }} />Godeye</h1>
                                 </div>
                             </div>
                         </div>
+                        <br /><br />
 
-                        <div class="container px-4 py-3 mt-5">
-                            <div class="row align-items-center g-5">
-                                <div class="col">
-                                    <h5 class="display-5 fw-bold lh-1">Get Insights On<br />What You See</h5>
-                                    <ul class="nav">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                                <span class="lead text-light">
-                                                    <hr style={{ width: "50px", border: "1px solid white" }} />
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">
-                                                <span>Get started</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-
-
-                                </div>
-                            </div>
-                        </div>
-
+                        
                     </div>
                 </div>
 
