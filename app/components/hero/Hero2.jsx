@@ -7,6 +7,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { Typewriter } from 'react-simple-typewriter'
 import '../../styles/heropage.css'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import Link from "next/link";
 
 export default function Hero2() {
 
@@ -110,9 +111,9 @@ export default function Hero2() {
                                     </div>
                                 </div>
 
-                                <div class="mt-3 text-light" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
+                                <Link href="/dashboard" class="mt-3 text-light" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
                                     Try Out Demo
-                                </div>
+                                </Link>
 
                             </div>
                         </div>

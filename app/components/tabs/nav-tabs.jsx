@@ -1,4 +1,5 @@
 import GodeyeCardWrapper from "../cards/godeye-card-wrapper"
+import SettingsSection from "../section/settingsSection"
 
 export default function NavTabs() {
 
@@ -13,8 +14,12 @@ export default function NavTabs() {
                         <GodeyeCardWrapper />
                     </div>
                 </div>
-                <div class="tab-pane" id="fill-tabpanel-1" role="tabpanel" aria-labelledby="fill-tab-1">Item Two</div>
-                <div class="tab-pane" id="fill-tabpanel-2" role="tabpanel" aria-labelledby="fill-tab-2">Item Three</div>
+                <div class="tab-pane" id="fill-tabpanel-2" role="tabpanel" aria-labelledby="fill-tab-2">
+                    <div class="mt-5 p-2">
+                        <br /><br />
+                        <SettingsSection />
+                    </div>
+                </div>
             </div>
 
         </>

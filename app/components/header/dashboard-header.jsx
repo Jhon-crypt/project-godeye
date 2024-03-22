@@ -31,11 +31,13 @@ export default function DashboardHeader() {
                             <FaHome className='me-1' /> Home
                         </a>
                     </li>
+                    {/* 
                     <li class="nav-item">
                         <a class="nav-link" id="fill-tab-0" data-bs-toggle="pill" href="#fill-tabpanel-1" role="tab" aria-controls="fill-tabpanel-1" aria-selected="true">
                             <FaBookmark className='me-1' /> Library
                         </a>
                     </li>
+                     */}
                     <li class="nav-item">
                         <a class="nav-link" id="fill-tab-0" data-bs-toggle="pill" href="#fill-tabpanel-2" role="tab" aria-controls="fill-tabpanel-2" aria-selected="true">
                             <FaCog className='me-1' /> Settings

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { isMobile } from 'react-device-detect';
+import { isMobile, MobileView } from 'react-device-detect';
 
 
 export default function GodmodeCamera() {
@@ -12,6 +12,7 @@ export default function GodmodeCamera() {
     const getVideo = () => {
 
         if (isMobile) {
+            
             navigator.mediaDevices
                 .getUserMedia({
                     video: {
@@ -27,6 +28,7 @@ export default function GodmodeCamera() {
                 .catch(err => {
                     alert(err)
                 })
+                
         } else {
             navigator.mediaDevices
                 .getUserMedia({
@@ -55,7 +57,9 @@ export default function GodmodeCamera() {
 
             <div className="camera">
                 <div>
-                    <video className="rounded" ref={videoRef} style={{ width: "100%" }}></video>
+                    <MobileView>
+                        <video className="rounded" ref={videoRef} style={{ width: "100%" }}></video>
+                    </MobileView>
                 </div>
 
             </div>
