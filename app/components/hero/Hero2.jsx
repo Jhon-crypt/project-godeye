@@ -6,6 +6,7 @@ import { FaBars } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { Typewriter } from 'react-simple-typewriter'
 import '../../styles/heropage.css'
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
 
 export default function Hero2() {
 
@@ -96,7 +97,7 @@ export default function Hero2() {
                                                                 cursorStyle='_'
                                                                 typeSpeed={70}
                                                                 deleteSpeed={50}
-                                                                delaySpeed={1000} 
+                                                                delaySpeed={1000}
                                                                 words={['For DIY Projects', 'Analyze Environment', 'Scientific Research', 'Language Learning', 'And so much more']} />
                                                         </span>
                                                         <button class="btn btn-sm rounded-circle bg-light shadow">
@@ -127,7 +128,22 @@ export default function Hero2() {
 
 
                         <div class="px-4 py-5 mt-5 text-center text-light">
-                            <h1 class="display-3 fw-bold"><GiDominoMask class="me-2" style={{ fontSize: "100px" }} />Godeye</h1>
+                            <div style={{ position: 'relative', height: '50%' }}>
+                                <div style={{ position: 'absolute', zIndex: '1', top: -150, left:190 }}>
+                                    <Player
+                                        autoplay
+                                        loop
+                                        src="/animation.json"
+                                        style={{ width: '100%' }}
+                                    >
+                                        <Controls />
+                                    </Player>
+                                </div>
+                                <div style={{ position: 'relative', zIndex: '1' }}>
+                                    {/* Your content goes here */}
+                                    <h1 class="display-3 fw-bold"><GiDominoMask class="me-2" style={{ fontSize: "100px" }} />Godeye</h1>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="container px-4 py-3 mt-5">

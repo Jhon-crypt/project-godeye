@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { isMobile } from 'react-device-detect';
+
 
 export default function GodmodeCamera() {
 
