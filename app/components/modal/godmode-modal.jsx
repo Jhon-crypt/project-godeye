@@ -105,7 +105,7 @@ export default function GodmodeModal() {
 
                             <div className="d-flex align-content-center justify-content-center">
                                 <div class={(hasPhoto ? '' : 'd-none')}>
-                                    <div className=" card mb-3 bg-dark shadow" style={{ width: '100%' }}>
+                                    <div className=" card mb-3 bg-dark shadow">
 
                                         <div className="card-body text-white">
                                             <canvas ref={photoRef}></canvas>
