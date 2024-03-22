@@ -12,7 +12,7 @@ export default function GodmodeCamera() {
     const getVideo = () => {
 
         if (isMobile) {
-            
+
             navigator.mediaDevices
                 .getUserMedia({
                     video: {
@@ -28,7 +28,7 @@ export default function GodmodeCamera() {
                 .catch(err => {
                     alert(err)
                 })
-                
+
         } else {
             navigator.mediaDevices
                 .getUserMedia({
@@ -46,10 +46,26 @@ export default function GodmodeCamera() {
 
     }
 
+    const takePhoto = () => {
+        const width = 414;
+        const height = width / (16 / 9);
+
+        let video = videoRef.current;
+        let photo = photoRef.current;
+
+        photo.width= width;
+        photo.height = height;
+
+        let ctx = photo.getContext('2d');
+        ctx.drawImage(video, 0, 0, width, height);
+
+        setHasPhoto(true)
+
+    }
+
     useEffect(() => {
         getVideo();
     }, [videoRef])
-
 
     return (
 
