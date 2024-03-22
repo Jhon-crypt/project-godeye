@@ -92,6 +92,8 @@ export default function GodmodeModal() {
         // Set state to indicate that a photo has been taken
         setHasPhoto(true);
 
+        photoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
     }
 
     useEffect(() => {
