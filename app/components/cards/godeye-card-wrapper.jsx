@@ -15,7 +15,7 @@ export default function GodeyeCardWrapper() {
                     <h4 className="text-light p-3 text-center">Where the magic happens</h4>
                     {*/}
 
-                    <a data-bs-toggle="modal" data-bs-target="#godmodeCard" href="/dashboard" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
+                    <a data-bs-toggle="modal" data-bs-target="#godmodeCard" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
                         Open God Eye
                     </a>
 

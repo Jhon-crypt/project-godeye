@@ -11,6 +11,8 @@ export default function GodmodeModal() {
     const photoRef = useRef(null)
 
     const [hasPhoto, setHasPhoto] = useState(false)
+    const [videoInitialized, setVideoInitialized] = useState(false);
+
 
     const getVideo = () => {
 
@@ -27,6 +29,7 @@ export default function GodmodeModal() {
                     let video = videoRef.current;
                     video.srcObject = stream;
                     video.play();
+                    setVideoInitialized(true);
                 })
                 .catch(err => {
                     alert(err)
@@ -41,6 +44,7 @@ export default function GodmodeModal() {
                     let video = videoRef.current;
                     video.srcObject = stream;
                     video.play();
+                    setVideoInitialized(true);
                 })
                 .catch(err => {
                     alert(err)
@@ -92,13 +96,43 @@ export default function GodmodeModal() {
         // Set state to indicate that a photo has been taken
         setHasPhoto(true);
 
-        photoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+            photoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100); // Adjust the delay as needed
 
     }
 
+    const closeCamera = () => {
+        if (videoInitialized) {
+            const stream = videoRef.current.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+    }
+
     useEffect(() => {
-        getVideo();
-    }, [videoRef])
+        // Attach event listener for modal shown event
+
+        const onModalShown = () => {
+            // When the modal is shown, call getVideo to initialize the camera
+            getVideo();
+        };
+
+        // Get the modal element
+        const modalElement = document.getElementById('godmodeCard');
+        if (modalElement) {
+            // Add event listener for shown.bs.modal event
+            modalElement.addEventListener('shown.bs.modal', onModalShown);
+        }
+
+        // Cleanup function to remove event listener when the component unmounts
+        return () => {
+            if (modalElement) {
+                modalElement.removeEventListener('shown.bs.modal', onModalShown);
+            }
+        };
+
+    }, [])
 
 
     return (
@@ -155,7 +189,7 @@ export default function GodmodeModal() {
                         </div>
 
                         <div class="modal-footer border-top-0">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="button" onClick={closeCamera} class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         </div>
 
                     </div>
