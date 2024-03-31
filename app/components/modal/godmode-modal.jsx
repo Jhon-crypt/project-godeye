@@ -100,6 +100,46 @@ export default function GodmodeModal() {
             photoRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100); // Adjust the delay as needed
 
+        // Get the canvas image data
+        const imageData = photoRef.current.toDataURL('image/jpeg');
+
+        // Create a FormData object
+        const formData = new FormData();
+
+        // Append the image data to the FormData object
+        formData.append('image', imageData);
+
+        // Append any additional data you need to send
+        formData.append('prompt', 'What is in this image');
+
+        // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
+        const bearerToken = process.env.NEXT_PUBLIC_GODEYE_BEARER;
+
+        //console.log(bearerToken)
+
+        // Make an HTTP POST request to your API endpoint
+        fetch('http://localhost:3001/api/godeye', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer 98c615784ccb5fe5936fbc0cbe9dfdb408d92f0f2062a204e958dda8e680d5f`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API Response:', data);
+            // Handle API response if needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error if needed
+        });
+
     }
 
     const closeCamera = () => {
