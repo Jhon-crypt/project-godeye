@@ -20,7 +20,7 @@ export default function Hero2() {
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="card border-0" style={{ "height": "95vh", "width": "100%", backgroundColor: "#000000" }}>
-                            <img class="card-img-top" src="/4k1.png" alt="Card image" style={{ "height": "100%", "width": "100%", "objectFit": "cover", borderRadius: "25px" }} />
+                            <img class="card-img-top" src="https://res.cloudinary.com/db7wwc9ex/image/upload/v1712021701/godeye/app/4k1_egozmb.png" alt="Card image" style={{ "height": "100%", "width": "100%", "objectFit": "cover", borderRadius: "25px" }} />
                             <div class="card-img-overlay">
                                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center mb-5">
 
