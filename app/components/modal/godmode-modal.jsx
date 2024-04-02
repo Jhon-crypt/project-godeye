@@ -103,14 +103,17 @@ export default function GodmodeModal() {
         // Get the canvas image data
         const imageData = photoRef.current.toDataURL('image/jpeg');
 
+        // Create a Blob from the Data URL
+        const blob = dataURLtoBlob(imageData);
+
         // Create a FormData object
         const formData = new FormData();
 
         // Append the image data to the FormData object
-        formData.append('image', imageData);
+        formData.append('image', blob);
 
         // Append any additional data you need to send
-        formData.append('prompt', 'What is in this image');
+        formData.append('user_prompt', 'What is in this image');
 
         // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
         const bearerToken = process.env.NEXT_PUBLIC_GODEYE_BEARER;
@@ -118,27 +121,40 @@ export default function GodmodeModal() {
         //console.log(bearerToken)
 
         // Make an HTTP POST request to your API endpoint
-        fetch('http://localhost:3001/api/godeye', {
+        fetch('/api/godeye', {
             method: 'POST',
             body: formData,
             headers: {
-                'Authorization': `Bearer 98c615784ccb5fe5936fbc0cbe9dfdb408d92f0f2062a204e958dda8e680d5f`
+                'Authorization': `Bearer ${bearerToken}`
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API Response:', data);
+                // Handle API response if needed
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error if needed
+            });
+
+        // Convert Data URL to Blob
+        function dataURLtoBlob(dataURL) {
+            const parts = dataURL.split(';base64,');
+            const contentType = parts[0].split(':')[1];
+            const raw = window.atob(parts[1]);
+            const rawLength = raw.length;
+            const uInt8Array = new Uint8Array(rawLength);
+            for (let i = 0; i < rawLength; ++i) {
+                uInt8Array[i] = raw.charCodeAt(i);
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log('API Response:', data);
-            // Handle API response if needed
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Handle error if needed
-        });
+            return new Blob([uInt8Array], { type: contentType });
+        }
 
     }
 
@@ -203,7 +219,7 @@ export default function GodmodeModal() {
 
                             </div>
                             <div class="input-group mb-3 mt-3">
-                                <input type="text" class="form-control" placeholder="Prompt" />
+                                <input id="prompt" type="text" class="form-control" placeholder="Prompt" />
                                 <button class="btn btn-primary" onClick={takePhoto}>Snap</button>
                             </div>
 
