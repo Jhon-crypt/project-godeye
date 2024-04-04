@@ -3,7 +3,13 @@ import GodeyeResultsCard from "../cards/godeye-results-cards";
 import { FaInfoCircle } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react"
 import { isMobile, MobileView } from 'react-device-detect';
+import ClipLoader from "react-spinners/ClipLoader";
 
+const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "#od6EFD",
+};
 
 export default function GodmodeModal() {
 
@@ -12,9 +18,15 @@ export default function GodmodeModal() {
 
     const [hasPhoto, setHasPhoto] = useState(false)
     const [videoInitialized, setVideoInitialized] = useState(false);
+    const [loadingGodeye, setLoadingGodeye] = useState(false)
+    const [color, setColor] = useState("#ffffff");
+    const [godeye_result, setGodeyeResult] = useState('')
+
 
 
     const getVideo = () => {
+
+        setColor("#ffffff")
 
         if (isMobile) {
 
@@ -32,6 +44,7 @@ export default function GodmodeModal() {
                     setVideoInitialized(true);
                 })
                 .catch(err => {
+                    //ALert error(Lol)
                     alert(err)
                 })
 
@@ -120,6 +133,8 @@ export default function GodmodeModal() {
 
         //console.log(bearerToken)
 
+        // Once the response starts, set loading state to true
+        setLoadingGodeye(true)
         // Make an HTTP POST request to your API endpoint
         fetch('/api/godeye', {
             method: 'POST',
@@ -129,16 +144,21 @@ export default function GodmodeModal() {
             }
         })
             .then(response => {
+                // Once the response is received, set loading state to false
+                setLoadingGodeye(false)
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('API Response:', data);
+                console.log('API Response:', data.result.gemini_pro_vision_response);
+                setGodeyeResult(data.result.gemini_pro_vision_response)
                 // Handle API response if needed
             })
             .catch(error => {
+                // If an error occurs, set loading state to false
+                setLoadingGodeye(false)
                 console.error('Error:', error);
                 // Handle error if needed
             });
@@ -233,8 +253,25 @@ export default function GodmodeModal() {
                                             <div class="canvas-container mb-3" style={{ maxWidth: '100%', margin: '0 auto' }}>
                                                 <canvas ref={photoRef} className="canvas" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: '5px' }}></canvas>
                                             </div>
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some example text. Some example text.</p>
+                                            {loadingGodeye ?
+
+                                                <>
+                                                    <ClipLoader
+                                                        color={color}
+                                                        loading={loadingGodeye}
+                                                        cssOverride={override}
+                                                        size={50}
+                                                        aria-label="Loading Spinner"
+                                                        data-testid="loader"
+                                                    />
+                                                </>
+                                                :
+                                                <>
+                                                    {/*}<h4 class="card-title"></h4>{*/}
+                                                    <p class="card-text">{godeye_result}</p>
+                                                </>
+                                            }
+
                                         </div>
 
                                     </div>
