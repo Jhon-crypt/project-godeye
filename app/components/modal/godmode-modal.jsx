@@ -21,6 +21,7 @@ export default function GodmodeModal() {
     const [loadingGodeye, setLoadingGodeye] = useState(false)
     const [color, setColor] = useState("#ffffff");
     const [godeye_result, setGodeyeResult] = useState('')
+    const [prompt, setPrompt] = useState('');
 
 
 
@@ -125,8 +126,10 @@ export default function GodmodeModal() {
         // Append the image data to the FormData object
         formData.append('image', blob);
 
-        // Append any additional data you need to send
-        formData.append('user_prompt', 'What is in this image');
+        // Check if prompt is empty
+        const promptToSend = prompt.trim() !== '' ? prompt : 'What is in this image';
+        // Append the prompt value to formData
+        formData.append('user_prompt', promptToSend);
 
         // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
         const bearerToken = process.env.NEXT_PUBLIC_GODEYE_BEARER;
@@ -215,7 +218,7 @@ export default function GodmodeModal() {
 
         <>
 
-            <div class="modal fade" id="godmodeCard">
+            <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="godmodeCard">
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content bg-dark">
 
@@ -223,7 +226,7 @@ export default function GodmodeModal() {
                             <h4 class="modal-title text-primary">
                                 <GiDominoMask style={{ fontSize: '25px' }} /> Godmode
                             </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" onClick={closeCamera}></button>
                         </div>
 
                         <div class="modal-body">
@@ -239,7 +242,7 @@ export default function GodmodeModal() {
 
                             </div>
                             <div class="input-group mb-3 mt-3">
-                                <input id="prompt" type="text" class="form-control" placeholder="Prompt" />
+                                <input id="prompt" type="text" class="form-control" placeholder="Prompt"  value={prompt} onChange={(e) => setPrompt(e.target.value)}/>
                                 <button class="btn btn-primary" onClick={takePhoto}>Snap</button>
                             </div>
 
@@ -268,7 +271,11 @@ export default function GodmodeModal() {
                                                 :
                                                 <>
                                                     {/*}<h4 class="card-title"></h4>{*/}
-                                                    <p class="card-text">{godeye_result}</p>
+                                                    <p class="card-text">
+                                                        <div class="alert alert-dark">
+                                                            {godeye_result}
+                                                        </div>
+                                                    </p>
                                                 </>
                                             }
 
