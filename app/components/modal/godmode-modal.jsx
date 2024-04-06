@@ -132,7 +132,7 @@ export default function GodmodeModal() {
         formData.append('user_prompt', promptToSend);
 
         // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
-        const bearerToken = process.env.NEXT_PUBLIC_GODEYE_BEARER;
+        const bearerToken = process.env.NEXT_PUBLIC_GODEYE_KEY;
 
         //console.log(bearerToken)
 

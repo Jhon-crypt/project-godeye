@@ -3,7 +3,6 @@ import { FaHome, FaBookmark, FaCog } from "react-icons/fa";
 import { GiDominoMask } from "react-icons/gi";
 import {
     SignedIn,
-    SignedOut,
     UserButton,
   } from "@clerk/nextjs";
 

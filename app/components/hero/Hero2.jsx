@@ -53,7 +53,7 @@ export default function Hero2() {
                                         <span class="badge rounded-pill text-dark px-0 py-2" style={{ background: "linear-gradient(120deg,rgba(255, 255, 255, .25),rgba(255, 255, 255, .75), 70%,rgba(255, 255, 255, .25) )" }}>
                                             <ul class="nav">
                                                 <li class="nav-item" data-bs-toggle="offcanvas" data-bs-target="#demo">
-                                                    <a class="nav-link text-white" href="#">
+                                                    <a class="nav-link text-white">
                                                         <span class="p-1" >
                                                             Menu <FaBars class="ms-2" style={{ fontSize: "15px" }} />
                                                         </span>
