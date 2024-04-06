@@ -230,11 +230,13 @@ export default function GodmodeModal() {
                         </div>
 
                         <div class="modal-body">
+                            {/*}
                             <span class="d-flex align-content-center justify-content-center">
                                 <span class="alert alert-success text-center p-2">
                                     <small><span><FaInfoCircle /></span> Point your camera to what you wanna know about</small>
                                 </span>
                             </span>
+                            {*/}
                             <div className="camera">
                                 <div>
                                     <video className="rounded" ref={videoRef} style={{ width: "100%" }}></video>
@@ -242,7 +244,7 @@ export default function GodmodeModal() {
 
                             </div>
                             <div class="input-group mb-3 mt-3">
-                                <input id="prompt" type="text" class="form-control" placeholder="Prompt"  value={prompt} onChange={(e) => setPrompt(e.target.value)}/>
+                                <input id="prompt" type="text" class="form-control" placeholder="Prompt" value={prompt} onChange={(e) => setPrompt(e.target.value)} />
                                 <button class="btn btn-primary" onClick={takePhoto}>Snap</button>
                             </div>
 
@@ -271,11 +273,11 @@ export default function GodmodeModal() {
                                                 :
                                                 <>
                                                     {/*}<h4 class="card-title"></h4>{*/}
-                                                    <p class="card-text">
+                                                    <div class="card-text">
                                                         <div class="alert alert-dark">
                                                             {godeye_result}
                                                         </div>
-                                                    </p>
+                                                    </div>
                                                 </>
                                             }
 

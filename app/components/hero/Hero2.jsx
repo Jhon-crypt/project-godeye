@@ -8,6 +8,7 @@ import { Typewriter } from 'react-simple-typewriter'
 import '../../styles/heropage.css'
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import Link from "next/link";
+import OffCanvasHeader from "../header/offcanvas-header";
 
 export default function Hero2() {
 
@@ -15,7 +16,7 @@ export default function Hero2() {
 
         <>
 
-            <div class="text-light m-2 p-2" style={{ height: "100%" }}>
+            <div class="text-light m-2 p-2" style={{ height: "100%", backgroundColor:"#000000" }}>
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -51,9 +52,9 @@ export default function Hero2() {
 
                                         <span class="badge rounded-pill text-dark px-0 py-2" style={{ background: "linear-gradient(120deg,rgba(255, 255, 255, .25),rgba(255, 255, 255, .75), 70%,rgba(255, 255, 255, .25) )" }}>
                                             <ul class="nav">
-                                                <li class="nav-item">
+                                                <li class="nav-item" data-bs-toggle="offcanvas" data-bs-target="#demo">
                                                     <a class="nav-link text-white" href="#">
-                                                        <span class="p-1">
+                                                        <span class="p-1" >
                                                             Menu <FaBars class="ms-2" style={{ fontSize: "15px" }} />
                                                         </span>
                                                     </a>
@@ -122,9 +123,9 @@ export default function Hero2() {
                     <div id="col2" class="col-sm-8" style={{ "borderRadius": "25px", backgroundColor: "#000000" }}>
                         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center text-light">
                             <span>Become a demiGod <br />with Godeye</span>
-                            <div class="mt-3 text-light" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
+                            <Link href="/sign-up" class="mt-3 text-light text-decoration-none" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", margin: "4px 2px", borderRadius: "20px" }}>
                                 Sign up now
-                            </div>
+                            </Link>
                         </div>
 
 
@@ -158,6 +159,8 @@ export default function Hero2() {
                         
                     </div>
                 </div>
+
+                <OffCanvasHeader />
 
             </div>
 

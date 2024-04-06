@@ -1,6 +1,11 @@
 import '../../styles/header/header.css'
 import { FaHome, FaBookmark, FaCog } from "react-icons/fa";
 import { GiDominoMask } from "react-icons/gi";
+import {
+    SignedIn,
+    SignedOut,
+    UserButton,
+  } from "@clerk/nextjs";
 
 export default function DashboardHeader() {
 
@@ -17,7 +22,13 @@ export default function DashboardHeader() {
                             <GiDominoMask className="d-inline-block align-text-center me-2" />
                             Godeye
                         </a>
+                        {/*}
                         <span class="bg-white pt-1 px-2 rounded-circle text-dark">H</span>
+                        {*/}
+                        <SignedIn>
+                            <UserButton />
+                        </SignedIn>
+
 
                     </div>
 
