@@ -22,7 +22,15 @@ export async function POST(req, res) {
 
         try {
 
-            const createGodScan = await saveGodScan();
+            const formData = await req.formData();
+
+            const data = {
+                user_id: formData.get('user_id'),
+                godScan_image_link: formData.get('image_link'),
+                godScan_response: formData.get('response')
+            }
+
+            const createGodScan = await saveGodScan(data.user_id, data.godScan_image_link, data.godScan_response);
 
             return NextResponse.json({ createGodScan });
 

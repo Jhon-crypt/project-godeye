@@ -4,6 +4,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react"
 import { isMobile, MobileView } from 'react-device-detect';
 import ClipLoader from "react-spinners/ClipLoader";
+import supabase from "../supabase/supabase";
 
 const override = {
     display: "block",
@@ -116,6 +117,7 @@ export default function GodmodeModal() {
 
         // Get the canvas image data
         const imageData = photoRef.current.toDataURL('image/jpeg');
+        //console.log(imageData)
 
         // Create a Blob from the Data URL
         const blob = dataURLtoBlob(imageData);
@@ -131,10 +133,33 @@ export default function GodmodeModal() {
         // Append the prompt value to formData
         formData.append('user_prompt', promptToSend);
 
+        //console.log(bearerToken)
+
+        storeGodeyeImage()
+
+        fetchPublicGodeyeImageUrl()
+
+        godeye()
+
+        // Convert Data URL to Blob
+        function dataURLtoBlob(dataURL) {
+            const parts = dataURL.split(';base64,');
+            const contentType = parts[0].split(':')[1];
+            const raw = window.atob(parts[1]);
+            const rawLength = raw.length;
+            const uInt8Array = new Uint8Array(rawLength);
+            for (let i = 0; i < rawLength; ++i) {
+                uInt8Array[i] = raw.charCodeAt(i);
+            }
+            return new Blob([uInt8Array], { type: contentType });
+        }
+
+    }
+
+    async function godeye(){
+
         // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
         const bearerToken = process.env.NEXT_PUBLIC_GODEYE_KEY;
-
-        //console.log(bearerToken)
 
         // Once the response starts, set loading state to true
         setLoadingGodeye(true)
@@ -166,17 +191,39 @@ export default function GodmodeModal() {
                 // Handle error if needed
             });
 
-        // Convert Data URL to Blob
-        function dataURLtoBlob(dataURL) {
-            const parts = dataURL.split(';base64,');
-            const contentType = parts[0].split(':')[1];
-            const raw = window.atob(parts[1]);
-            const rawLength = raw.length;
-            const uInt8Array = new Uint8Array(rawLength);
-            for (let i = 0; i < rawLength; ++i) {
-                uInt8Array[i] = raw.charCodeAt(i);
-            }
-            return new Blob([uInt8Array], { type: contentType });
+    }
+
+    async function storeGodeyeImage() {
+        const { data, error } = await supabase
+            .storage
+            .from('godeye-images')
+            .upload(`testimage`, blob, {
+                cacheControl: '3600',
+                upsert: false
+            });
+
+        if (error) {
+            console.error('Error uploading photo:', error.message);
+            // Handle error if needed
+        } else {
+            console.log('Photo uploaded successfully:', data);
+            // Handle success if needed
+        }
+    }
+
+    //storeImage()
+
+    async function fetchPublicGodeyeImageUrl() {
+
+        const { data } = supabase
+            .storage
+            .from('godeye-images')
+            .getPublicUrl('testimage')
+
+        if(data) {
+            console.log(data)
+        }else{
+            console.log("Image not found")
         }
 
     }
