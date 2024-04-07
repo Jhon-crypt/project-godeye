@@ -135,11 +135,11 @@ export default function GodmodeModal() {
 
         //console.log(bearerToken)
 
-        storeGodeyeImage()
+        //storeGodeyeImage()
 
-        fetchPublicGodeyeImageUrl()
+        //fetchPublicGodeyeImageUrl()
 
-        godeye()
+        godeye(formData)
 
         // Convert Data URL to Blob
         function dataURLtoBlob(dataURL) {
@@ -156,7 +156,7 @@ export default function GodmodeModal() {
 
     }
 
-    async function godeye(){
+    async function godeye(formData){
 
         // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
         const bearerToken = process.env.NEXT_PUBLIC_GODEYE_KEY;
