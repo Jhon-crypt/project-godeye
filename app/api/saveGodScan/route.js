@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import supabase from "../../components/supabase/supabase";
 import { headers } from 'next/headers';
 import { saveGodScan } from "../../controllers/saveGodscan-controller";
+
 
 export async function POST(req, res) {
 
@@ -20,25 +20,22 @@ export async function POST(req, res) {
     // Check if the Bearer token matches the expected value from the environment variables
     if (bearer_token === process.env.GODEYE_KEY) {
 
-        try {
 
-            const formData = await req.formData();
 
-            const data = {
-                user_id: formData.get('user_id'),
-                godScan_image_link: formData.get('image_link'),
-                godScan_response: formData.get('response')
-            }
+        const formData = await req.formData();
 
-            const createGodScan = await saveGodScan(data.user_id, data.godScan_image_link, data.godScan_response);
-
-            return NextResponse.json({ createGodScan });
-
-        } catch (error){
-
-            return NextResponse.json({ error });
-
+        const data = {
+            user_id: formData.get('user_id'),
+            godScan_id: formData.get('godScan_id'),
+            godScan_image_link: formData.get('godScan_image_link'),
+            godScan_response: formData.get('godScan_response')
         }
+
+        const createGodScan = await saveGodScan(data.user_id, data.godScan_id, data.godScan_image_link, data.godScan_response);
+
+        return NextResponse.json({ createGodScan });
+
+
 
     } else {
 

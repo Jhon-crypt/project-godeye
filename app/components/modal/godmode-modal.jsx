@@ -1,10 +1,11 @@
 import { GiDominoMask } from "react-icons/gi";
-import GodeyeResultsCard from "../cards/godeye-results-cards";
-import { FaInfoCircle } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react"
-import { isMobile, MobileView } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import ClipLoader from "react-spinners/ClipLoader";
 import supabase from "../supabase/supabase";
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 const override = {
     display: "block",
@@ -12,7 +13,7 @@ const override = {
     borderColor: "#od6EFD",
 };
 
-export default function GodmodeModal() {
+export default function GodmodeModal(props) {
 
     const videoRef = useRef(null)
     const photoRef = useRef(null)
@@ -28,27 +29,44 @@ export default function GodmodeModal() {
 
     const getVideo = () => {
 
+
         setColor("#ffffff")
 
         if (isMobile) {
 
-            navigator.mediaDevices
-                .getUserMedia({
-                    video: {
-                        facingMode: { exact: 'environment' }, // Use 'environment' for rear camera
-                        width: 400 // Set desired width
-                    }
-                })
-                .then(stream => {
-                    let video = videoRef.current;
-                    video.srcObject = stream;
-                    video.play();
-                    setVideoInitialized(true);
-                })
-                .catch(err => {
-                    //ALert error(Lol)
-                    alert(err)
-                })
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                navigator.mediaDevices
+                    .getUserMedia({
+                        video: { width: 400 }
+                    })
+                    .then(stream => {
+                        let video = videoRef.current;
+                        video.srcObject = stream;
+                        video.play();
+                        setVideoInitialized(true);
+                    })
+                    .catch(err => {
+                        alert(err)
+                    })
+            } else {
+                navigator.mediaDevices
+                    .getUserMedia({
+                        video: {
+                            facingMode: { exact: 'environment' }, // Use 'environment' for rear camera
+                            width: 400 // Set desired width
+                        }
+                    })
+                    .then(stream => {
+                        let video = videoRef.current;
+                        video.srcObject = stream;
+                        video.play();
+                        setVideoInitialized(true);
+                    })
+                    .catch(err => {
+                        //ALert error(Lol)
+                        alert(err)
+                    })
+            }
 
         } else {
             navigator.mediaDevices
@@ -135,11 +153,7 @@ export default function GodmodeModal() {
 
         //console.log(bearerToken)
 
-        //storeGodeyeImage()
-
-        //fetchPublicGodeyeImageUrl()
-
-        godeye(formData)
+        godeye(formData, blob)
 
         // Convert Data URL to Blob
         function dataURLtoBlob(dataURL) {
@@ -156,76 +170,111 @@ export default function GodmodeModal() {
 
     }
 
-    async function godeye(formData){
+    async function storeGodeyeImage(blob, godprompt) {
+
+        const godScan_id = uuidv4();
+
+        // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
+        const bearerToken = process.env.NEXT_PUBLIC_GODEYE_KEY;
+
+        try {
+            const { data, error } = await supabase
+                .storage
+                .from('godeye-images')
+                .upload(`${godScan_id}`, blob, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+
+            if (error) {
+                console.error('Error uploading photo:', error.message);
+                // Handle error if needed
+            } else if (data) {
+                console.log('What you looking for,Thief,Ole');
+                // Handle success if needed
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
+            const { data } = supabase
+                .storage
+                .from('godeye-images')
+                .getPublicUrl(`${godScan_id}`)
+
+            if (data) {
+                console.log(data)
+                if (data.publicUrl) {
+                    //saving God scan
+                    try {
+                        const godScanFormData = new FormData();
+                        godScanFormData.append('user_id', props.userId)
+                        godScanFormData.append('godScan_id', godScan_id)
+                        godScanFormData.append('godScan_image_link', data.publicUrl)
+                        godScanFormData.append('godScan_response', godprompt)
+
+                        const response = await fetch('/api/saveGodScan', {
+                            method: 'POST',
+                            body: godScanFormData,
+                            headers: {
+                                'Authorization': `Bearer ${bearerToken}`
+                            }
+                        });
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        } else {
+                            const data = await response.json();
+                            console.log("What you looking for")
+                        }
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            } else {
+                console.log("Image not found")
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        localStorage.removeItem('scan_id');
+    }
+
+    //storeImage(
+
+
+
+    async function godeye(formData, blob) {
 
         // Make sure to replace 'YOUR_BEARER_TOKEN' with your actual bearer token
         const bearerToken = process.env.NEXT_PUBLIC_GODEYE_KEY;
 
         // Once the response starts, set loading state to true
         setLoadingGodeye(true)
-        // Make an HTTP POST request to your API endpoint
-        fetch('/api/godeye', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Authorization': `Bearer ${bearerToken}`
-            }
-        })
-            .then(response => {
-                // Once the response is received, set loading state to false
-                setLoadingGodeye(false)
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        try {
+            // Make an HTTP POST request to your API endpoint
+            const response = await fetch('/api/godeye', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${bearerToken}`
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log('API Response:', data.result.gemini_pro_vision_response);
-                setGodeyeResult(data.result.gemini_pro_vision_response)
-                // Handle API response if needed
-            })
-            .catch(error => {
-                // If an error occurs, set loading state to false
+            });
+            if (!response.ok) {
                 setLoadingGodeye(false)
-                console.error('Error:', error);
-                // Handle error if needed
-            });
-
-    }
-
-    async function storeGodeyeImage() {
-        const { data, error } = await supabase
-            .storage
-            .from('godeye-images')
-            .upload(`testimage`, blob, {
-                cacheControl: '3600',
-                upsert: false
-            });
-
-        if (error) {
-            console.error('Error uploading photo:', error.message);
-            // Handle error if needed
-        } else {
-            console.log('Photo uploaded successfully:', data);
-            // Handle success if needed
+                throw new Error('Network response was not ok');
+            } else {
+                const data = await response.json();
+                if (data.result.gemini_pro_vision_response) {
+                    setLoadingGodeye(false);
+                    setGodeyeResult(data.result.gemini_pro_vision_response);
+                    await storeGodeyeImage(blob, data.result.gemini_pro_vision_response)
+                }
+            }
+        } catch (error) {
+            console.log(error)
         }
-    }
-
-    //storeImage()
-
-    async function fetchPublicGodeyeImageUrl() {
-
-        const { data } = supabase
-            .storage
-            .from('godeye-images')
-            .getPublicUrl('testimage')
-
-        if(data) {
-            console.log(data)
-        }else{
-            console.log("Image not found")
-        }
-
     }
 
     const closeCamera = () => {

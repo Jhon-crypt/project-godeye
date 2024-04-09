@@ -1,8 +1,7 @@
-import GodeyeResultsCard from "./godeye-results-cards"
 import '../../styles/card/godeye-card-style.css'
 
-export default function GodeyeCardWrapper() {
-
+export default function GodeyeCardWrapper(props) {
+    console.log(props.user_id)
     return (
 
         <>
