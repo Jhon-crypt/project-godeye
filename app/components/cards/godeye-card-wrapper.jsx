@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import supabase from '../supabase/supabase';
 import { useAuth } from "@clerk/nextjs";
 import '../../styles/loader.css'
+import ViewGodCard from '../modal/viewGodCard';
 
 export default function GodeyeCardWrapper() {
 
@@ -27,7 +28,8 @@ export default function GodeyeCardWrapper() {
                 const { data } = await supabase
                     .from('godScan_history')
                     .select('*')
-                    .eq('user_id', `${userId}`);
+                    .eq('user_id', `${userId}`)
+                    .order('id', { ascending: false })
 
                 if (data) {
                     setLoading(false)
@@ -101,13 +103,12 @@ export default function GodeyeCardWrapper() {
 
                                                             <img className="rounded mb-3" src={god.godScan_image_link} style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
 
-                                                            <h4 class="card-title">What's the asnwer to this</h4>
-                                                            <p id="test" class="card-text">
+                                                            <p id="test" class="lead card-text">
                                                                 {god.godScan_response}
                                                             </p>
 
                                                             <div class="d-grid">
-                                                                <button type="button" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", borderRadius: "20px" }}>view more</button>
+                                                                <button data-bs-toggle="modal" data-bs-target={`#viewGodCard-${god.id}`} type="button" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", borderRadius: "20px" }}>view more</button>
                                                             </div>
 
                                                         </div>
@@ -115,6 +116,7 @@ export default function GodeyeCardWrapper() {
                                                     </div>
 
                                                 </div>
+                                                <ViewGodCard id={`viewGodCard-${god.id}`} image={god.godScan_image_link} result={god.godScan_response}/>
                                             </div>
 
                                         </>
