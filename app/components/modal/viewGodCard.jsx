@@ -25,16 +25,20 @@ export default function ViewGodCard(props) {
                                 <div className="card-body text-white">
 
                                     <img className="rounded mb-3" src={props.image} style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
-                                    <hr />
-                                    <p class="lead card-text">
-                                    {props.result}
-                                    </p>
 
+                                    <div class="card-text">
+                                        <div class="alert alert-dark">{props.result}</div>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer border-top-0">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                 </div>
 
                             </div>
 
-                
+
                         </div>
 
                     </div>

@@ -6,8 +6,6 @@ import supabase from "../supabase/supabase";
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from "@clerk/nextjs";
 
-
-
 const override = {
     display: "block",
     margin: "0 auto",
