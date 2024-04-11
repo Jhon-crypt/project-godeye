@@ -1,7 +1,69 @@
+"use client"
 import '../../styles/card/godeye-card-style.css'
+import { useEffect, useState } from 'react'
+import supabase from '../supabase/supabase';
+import { useAuth } from "@clerk/nextjs";
+import '../../styles/loader.css'
 
-export default function GodeyeCardWrapper(props) {
-    console.log(props.user_id)
+export default function GodeyeCardWrapper() {
+
+    const { userId } = useAuth();
+
+    // Initialize state variables for portfolios and loading state
+    const [godCards, setGodCards] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+
+    useEffect(() => {
+
+        console.log('joh')
+        console.log("This is me")
+
+        setLoading(true)
+
+        async function fetchGodSanHistory() {
+            try {
+                setLoading(true)
+                const { data } = await supabase
+                    .from('godScan_history')
+                    .select('*')
+                    .eq('user_id', `${userId}`);
+
+                if (data) {
+                    setLoading(false)
+                    setGodCards(data)
+                    console.log(data)
+
+                } else {
+                    setLoading(false)
+                    console.log("Nothing here")
+                }
+            } catch (error) {
+                setLoading(false)
+                console.log(error)
+            }
+        }
+        fetchGodSanHistory()
+
+        const godListener = supabase
+        .channel('any')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'godScan_history' }, payload => {
+            const newGod = payload.new;
+            setGodCards((oldGod) => {
+                // Add the newly inserted project to the list of projects and sort them by ID.
+                const newGods = [...oldGod, newGod];
+                newGods.sort((a, b) => b.id - a.id);
+                return newGods;
+            });
+        })
+        .subscribe();
+
+    return () => {
+        supabase.removeChannel(godListener); // Cleanup: remove the listener when the component is unmounted.
+    };
+
+    }, []);
+
     return (
 
         <>
@@ -18,63 +80,46 @@ export default function GodeyeCardWrapper(props) {
                         Open God Eye
                     </a>
 
-                    <div id="wrapper-result-card">
-                        <div className="row">
-                            {/*}
-                            <div className="col-md-6">
-                                <GodeyeResultsCard />
+                    {loading ?
+                        <>
+                            <div class="d-flex align-content-center justify-content-center">
+                                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
                             </div>
-                        {*/}
-                            <div className="col-md-6">
-                                <div className="d-flex align-content-center justify-content-center">
-                                    <div className=" card mb-3 bg-dark shadow" style={{ width: '100%' }}>
+                        </>
+                        :
+                        <>
+                            <div id="wrapper-result-card">
+                                <div className="row">
 
-                                        <div className="card-body text-white">
+                                    {godCards.map((god) => (
+                                        <>
+                                            <div className="col-md-6" key={god.id}>
+                                                <div className="d-flex align-content-center justify-content-center">
+                                                    <div className=" card mb-3 bg-dark shadow" style={{ width: '100%' }}>
 
-                                            <img className="rounded mb-3" src="/math.png" style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
+                                                        <div className="card-body text-white">
 
-                                            <h4 class="card-title">What's the asnwer to this</h4>
-                                            <p class="card-text">
-                                                The answer to the question in the image is B
-                                                2x+5
-                                                x
-                                                2
-                                                +5x+6
-                                            </p>
+                                                            <img className="rounded mb-3" src={god.godScan_image_link} style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
 
-                                            <div class="d-grid">
-                                                <button type="button" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", borderRadius: "20px" }}>view more</button>
+                                                            <h4 class="card-title">What's the asnwer to this</h4>
+                                                            <p id="test" class="card-text">
+                                                                {god.godScan_response}
+                                                            </p>
+
+                                                            <div class="d-grid">
+                                                                <button type="button" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", borderRadius: "20px" }}>view more</button>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
                                             </div>
 
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className="d-flex align-content-center justify-content-center">
-                                    <div className=" card mb-3 bg-dark shadow" style={{ width: '100%' }}>
-
-                                        <div className="card-body text-white">
-
-                                            <img className="rounded mb-3" src="/flat.jpg" style={{ width: '100%', height: '200px', objectFit: 'cover' }} alt="..." />
-
-                                            <h4 class="card-title">How can i fix my flat tire</h4>
-                                            <p class="card-text">Here are steps to patch a tire with a tire plug kit below...</p>
-
-                                            <div class="d-grid">
-                                                <button type="button" class="mb-3 mt-3 text-light d-flex justify-content-center align-content-center" style={{ backgroundColor: "transparent", border: "1px solid #FFFFFF", color: "white", padding: "10px", "textAlign": "center", textDecoration: "none", display: "inline-block", borderRadius: "20px" }}>view more</button>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            {/*}
+                                        </>
+                                    ))}
+                                    {/*}
                             <div className="col-md-6">
                                 <GodeyeResultsCard />
                             </div>
@@ -82,9 +127,11 @@ export default function GodeyeCardWrapper(props) {
                                 <GodeyeResultsCard />
                             </div>
                             {*/}
-                        </div>
+                                </div >
 
-                    </div>
+                            </div>
+                        </>
+                    }
 
                 </div>
 

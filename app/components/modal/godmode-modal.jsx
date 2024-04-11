@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect';
 import ClipLoader from "react-spinners/ClipLoader";
 import supabase from "../supabase/supabase";
 import { v4 as uuidv4 } from 'uuid';
+import { useAuth } from "@clerk/nextjs";
 
 
 
@@ -13,7 +14,8 @@ const override = {
     borderColor: "#od6EFD",
 };
 
-export default function GodmodeModal(props) {
+export default function GodmodeModal() {
+    const { userId } = useAuth();
 
     const videoRef = useRef(null)
     const photoRef = useRef(null)
@@ -24,7 +26,6 @@ export default function GodmodeModal(props) {
     const [color, setColor] = useState("#ffffff");
     const [godeye_result, setGodeyeResult] = useState('')
     const [prompt, setPrompt] = useState('');
-
 
 
     const getVideo = () => {
@@ -209,7 +210,7 @@ export default function GodmodeModal(props) {
                     //saving God scan
                     try {
                         const godScanFormData = new FormData();
-                        godScanFormData.append('user_id', props.userId)
+                        godScanFormData.append('user_id', userId)
                         godScanFormData.append('godScan_id', godScan_id)
                         godScanFormData.append('godScan_image_link', data.publicUrl)
                         godScanFormData.append('godScan_response', godprompt)
